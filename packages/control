@@ -1,0 +1,9 @@
+Package: protimer
+Maintainer: Alexander Vorobyev <mvoral@mail.ru>
+Section: Office
+Priority: optional
+Description: Projects Timer. Таймер Проектов.
+ The small time trasking program.
+ Небольшая программа для учета рабочего времени.
+Depends: libqt4-core (>=4.1.0-1), libqt4-gui (>=4.1.0-1), libc6 (>=2.3)
+

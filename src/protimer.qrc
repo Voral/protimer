@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/coelho/player_time.ico</file>
+        <file>res/coelho/cancel.png</file>
+        <file>res/coelho/edit_add.png</file>
+        <file>res/coelho/player_pause.png</file>
+        <file>res/coelho/player_play.png</file>
+        <file>res/coelho/documentinfo.png</file>
+        <file>res/coelho/configure.png</file>
+    </qresource>
+</RCC>

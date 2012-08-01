@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Projects Timer
+Name[ru]=Таймер Проектов
+GenericName=Projects Timer
+GenericName[ru]=Таймер проектов
+Comment=Time tracking application
+Comment[ru]=Учет рабочего времени
+Exec=protimer
+Icon=protimer
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=Office;
