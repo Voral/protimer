@@ -1,8 +1,3 @@
-Downloads : [from code.google.com](http://code.google.com/p/fontbuilder/downloads/list)
-
-Support : [gamedev.ru forum theme](http://www.gamedev.ru/projects/forum/?id=133540) (russian)
-
-
 ~ About:
 
 protimer is small time tracking application
