@@ -29,6 +29,19 @@ TARGET = protimer
 TEMPLATE = app
 
 DESTDIR = ../bin
+!macx {
+	win32 {
+		DESTDIR = ../bin32
+	}
+	linux-g++-32 {
+		DESTDIR = ../bin32
+	}
+	linux-g++-64 {
+		DESTDIR = ../bin64
+	}
+}
+
+
 OBJECTS_DIR += ../.objsrv
 MOC_DIR += ../.mocsrv
 RCC_DIR += ../.rccsrv
