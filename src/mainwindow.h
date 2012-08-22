@@ -39,7 +39,7 @@ public:
 private:
     Ui::MainWindow *ui;
     bool validateName(QString name);
-    void addProject(QString name, qint64 total=0);
+    void addProject(QString name, qint64 total=0, int hoursePerDay=24);
 
 
 public slots:

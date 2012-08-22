@@ -35,18 +35,21 @@ class Project : public QWidget
     Q_OBJECT
 
 public:
-    explicit Project(QString name,qint64 total=0, QWidget *parent = 0);
+    explicit Project(QString name, qint64 total=0, int iHoursPerDay=24, QWidget *parent = 0);
     ~Project();
     QString getName();
     void stop();
     qint64 getTotal();
+    int getHoursPerDay();
+    static int defaultHoursPerDay;
 
 private:
     Ui::Project *ui;
     qint32 total;
     bool isSender;
-    QTime current;
     QTimer timer;
+    int hoursePerDay;
+    QTime current;
 signals:
     void running();
 public slots:
@@ -55,6 +58,8 @@ public slots:
 private slots:
     void updateTimeLabel(bool wCurrent = true);
     void on_btRun_toggled(bool checked);
+    void on_btEdit_clicked();
+    void on_btDelete_clicked();
 };
 
 #endif // PROJECT_H

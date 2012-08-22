@@ -22,8 +22,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "project.h"
+#include "edit.h"
 
-#include <QInputDialog>
 #include <QMessageBox>
 #include <QSettings>
 #include <QPixmap>
@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     ui->setupUi(this);
-    qApp->setApplicationVersion("1.0");
+    qApp->setApplicationVersion("1.1");
     qApp->setApplicationName(tr("Projects Timer"));
     setWindowTitle(qApp->applicationName());
 
@@ -47,12 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     foreach(QString name, presetList)
     {
         cfg->beginGroup(name);
-        addProject(cfg->value("name",QString("noname")).toString(),cfg->value("total",int(0)).toInt());
+        addProject(cfg->value("name",QString("noname")).toString(),cfg->value("total",int(0)).toInt(),cfg->value("hoursPerDay",int(Project::defaultHoursPerDay)).toInt());
         cfg->endGroup();
     }
     delete cfg;
-
-
 }
 
 MainWindow::~MainWindow()
@@ -75,6 +73,7 @@ MainWindow::~MainWindow()
             cfg->beginGroup(QString("project%1").arg(i));
             cfg->setValue("name",pr->getName());
             cfg->setValue("total",int(pr->getTotal()));
+            cfg->setValue("hoursPerDay",int(pr->getHoursPerDay()));
             cfg->endGroup();
         }
     }
@@ -82,6 +81,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 bool MainWindow::validateName(QString name)
+// Validate project name on blank and clone
 {
     if (name.isEmpty())
     {
@@ -113,20 +113,21 @@ bool MainWindow::validateName(QString name)
 
 void MainWindow::addProject()
 {
-    bool ok;
-    QString text;
+    int ok;
+    Edit *dlgEdit = new Edit("",Project::defaultHoursPerDay,this);
     do {
-        text = QInputDialog::getText(this, tr("New project"),tr("Project name:"), QLineEdit::Normal,"", &ok);
-    } while (ok && !validateName(text));
-    if (ok)
+        ok = dlgEdit->exec();
+    } while (ok==QDialog::Accepted && !validateName(dlgEdit->getName()));
+    if (ok == QDialog::Accepted)
     {
-        addProject(text);
+        addProject(dlgEdit->getName(),0,dlgEdit->getHours());
     }
+    delete dlgEdit;
 }
-void MainWindow::addProject(QString name, qint64 total)
+void MainWindow::addProject(QString name, qint64 total, int hoursePerDay)
 {
     QVBoxLayout *layout =static_cast <QVBoxLayout *>(ui->frame->layout());
-    Project *project = new Project(name, total, this);
+    Project *project = new Project(name, total, hoursePerDay, this);
     layout->insertWidget(0,project,0,Qt::AlignTop);
     connect(project,SIGNAL(running()),this,SLOT(onRunning()));
     connect(this,SIGNAL(newRunning()),project,SLOT(onRunningSend()));

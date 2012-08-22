@@ -21,13 +21,18 @@
 /********************************************************************************/
 #include "project.h"
 #include "ui_project.h"
+#include "edit.h"
+#include <QMessageBox>
 
-Project::Project(QString name, qint64 total, QWidget *parent) :
+int Project::defaultHoursPerDay = 8;
+
+Project::Project(QString name, qint64 total, int iHoursPerDay, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Project),
+    total(total),
     isSender(false),
-    current(QTime(0,0,0,0)),
-    total(total)
+    hoursePerDay(iHoursPerDay),
+    current(QTime(0,0,0,0))
 {
     ui->setupUi(this);
     updateTimeLabel();
@@ -47,13 +52,14 @@ void Project::updateTimeLabel(bool wCurrent)
     qint64 hours = tmp / 3600;
     qint16 min = (tmp - hours*3600) / 60;
     qint16 sec = tmp -  hours*3600 - min * 60;
-    qint16 fulldays =  hours / 24;
+    qint16 fulldays =  hours / this->hoursePerDay;
 
-    ui->lbTime->setText(QString("%1:%2:%3 (%4 full days)")
+    ui->lbTime->setText(QString("%1:%2:%3 (%4 full days [%5 hour/day])")
                 .arg(hours)
                 .arg(min,2,10,QChar('0'))
                 .arg(sec,2,10,QChar('0'))
-                .arg(fulldays));
+                .arg(fulldays)
+                .arg(this->hoursePerDay));
 }
 void Project::stop()
 {
@@ -94,4 +100,32 @@ void Project::on_btRun_toggled(bool checked)
 QString Project::getName()
 {
     return ui->lbName->text();
+}
+int Project::getHoursPerDay()
+{
+    return this->hoursePerDay;
+}
+
+void Project::on_btEdit_clicked()
+{
+    Edit *dlgEdit = new Edit(ui->lbName->text(),this->hoursePerDay,this);
+    if (dlgEdit->exec()==QDialog::Accepted)
+    {
+        this->hoursePerDay = dlgEdit->getHours();
+        ui->lbName->setText(dlgEdit->getName());
+        updateTimeLabel(false);
+    }
+    delete dlgEdit;
+}
+
+void Project::on_btDelete_clicked()
+{
+    if (QMessageBox::question(this,tr("Deleting project"),
+                       tr("Are you sure to delete the project <b>%1</b>?")
+                       .arg(ui->lbName->text()), QMessageBox::Ok | QMessageBox::No,
+                          QMessageBox::No
+                         ) == QMessageBox::Ok)
+    {
+        this->deleteLater();
+    }
 }

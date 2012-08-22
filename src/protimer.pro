@@ -48,13 +48,17 @@ RCC_DIR += ../.rccsrv
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    project.cpp
+    project.cpp \
+    edit.cpp
 
 HEADERS  += mainwindow.h \
-    project.h
+    project.h \
+    edit.h
 
 FORMS    += mainwindow.ui \
-    project.ui
+    project.ui \
+    edit.ui
 
 RESOURCES += \
     protimer.qrc
+
