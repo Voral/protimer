@@ -30,15 +30,15 @@ TEMPLATE = app
 
 DESTDIR = ../bin
 !macx {
-	win32 {
-		DESTDIR = ../bin32
-	}
-	linux-g++-32 {
-		DESTDIR = ../bin32
-	}
-	linux-g++-64 {
-		DESTDIR = ../bin64
-	}
+        win32 {
+                DESTDIR = ../bin32
+        }
+        linux-g++-32 {
+                DESTDIR = ../bin32
+        }
+        linux-g++-64 {
+                DESTDIR = ../bin64
+        }
 }
 
 
@@ -49,16 +49,25 @@ RCC_DIR += ../.rccsrv
 SOURCES += main.cpp\
         mainwindow.cpp \
     project.cpp \
-    edit.cpp
+    edit.cpp \
+    hotkeyedit.cpp
 
 HEADERS  += mainwindow.h \
     project.h \
-    edit.h
+    edit.h \
+    hotkeyedit.h
 
 FORMS    += mainwindow.ui \
     project.ui \
-    edit.ui
+    edit.ui \
+    hotkeyedit.ui
 
 RESOURCES += \
     protimer.qrc
 
+TRANSLATIONS  = lang/protimer_ru.ts
+
+QMAKE_CPPFLAGS *=$(shell dpkg-buildflags --get CPPFLAGS)
+QMAKE_CFLAGS *= $(shell dpkg-buildflags --get CFLAGS)
+QMAKE_CXXFLAGS *=$(shell dpkg-buildflags --get CXXFLAGS)
+QMAKE_LDFLAGS *=$(shell dpkg-buildflags --get LDFLAGS)

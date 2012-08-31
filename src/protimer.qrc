@@ -7,5 +7,6 @@
         <file>res/coelho/player_play.png</file>
         <file>res/coelho/documentinfo.png</file>
         <file>res/coelho/configure.png</file>
+        <file>res/yellowicon/exit.png</file>
     </qresource>
 </RCC>

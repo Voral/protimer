@@ -1,18 +1,23 @@
 #!/bin/sh
 #gzip -9
-VERSION="1.3"
+VERSION="1.2"
 VERSIONPKG="1"
 PLATFORM="i386"
 ARCH=32
-PKGNAME=basetest
+PKGNAME=protimer
 
 SRCDIR=../bin$ARCH
 DEBNAME=${PKGNAME}_${VERSION}-${VERSIONPKG}_$PLATFORM.deb
 
 SIZE=`du $PKGNAME --exclude=DEBIAN -s | sed -rn "s/^([0-9]+).*/\1/gp"`
 
+gzip -9 -c changelog > protimer/usr/share/doc/protimer/changelog.gz
 rm $PKGNAME/usr/bin/*
 cp $SRCDIR/* $PKGNAME/usr/bin/
+chmod 0755 $PKGNAME/usr/bin/*
+
+strip --strip-unneeded $PKGNAME/usr/bin/*
+
 echo "Version: $VERSION" > $PKGNAME/DEBIAN/control
 echo "Architecture: $PLATFORM" >> $PKGNAME/DEBIAN/control
 echo "Installed-Size: $SIZE" >> $PKGNAME/DEBIAN/control

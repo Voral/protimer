@@ -2,5 +2,5 @@
 cd src
 qmake
 make clean
-make
+make 
 cd ..

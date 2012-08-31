@@ -23,11 +23,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWindow;
 }
-
+class Project;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -35,20 +36,30 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void setVisible(bool visible);
 
 private:
     Ui::MainWindow *ui;
+    QSystemTrayIcon *trayIcon;
     bool validateName(QString name);
-    void addProject(QString name, qint64 total=0, int hoursePerDay=24);
+    Project *addProject(QString name, qint64 total=0, int hoursePerDay=24, QString keySequence="");
+    void createTrayIcon();
+    QAction *quitAction;
+    QMenu *trayIconMenu;
 
 
 public slots:
     void addProject();
     void onRunning();
+    void onSetIconToolTip(const QString text,const QString name);
 signals:
     void newRunning();
 private slots:
     void on_actionAbout_triggered();
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+protected:
+    void closeEvent(QCloseEvent *event);
+
 };
 
 #endif // MAINWINDOW_H

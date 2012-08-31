@@ -1,0 +1,5 @@
+?package(protimer):needs="x11" section="Applications/Programming" \
+        title="Project Timer" \
+        longtitle="Project Timer" \
+        icon="/usr/share/pixmaps/protimer.xpm" \
+        command="protimer"

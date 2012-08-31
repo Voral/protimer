@@ -19,52 +19,40 @@
 /*    along with protime.  If not, see <http://www.gnu.org/licenses/>.          */
 /*                                                                              */
 /********************************************************************************/
-#ifndef PROJECT_H
-#define PROJECT_H
+#include "hotkeyedit.h"
+#include "ui_hotkeyedit.h"
+#include <QKeyEvent>
+#include <QShortcut>
 
-#include <QWidget>
-#include <QTimer>
-#include <QTime>
-
-namespace Ui {
-class Project;
+HotKeyEdit::HotKeyEdit(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::HotKeyEdit)
+{
+    ui->setupUi(this);
 }
 
-class Project : public QWidget
+HotKeyEdit::~HotKeyEdit()
 {
-    Q_OBJECT
+    delete ui;
+}
+void HotKeyEdit::keyPressEvent ( QKeyEvent * event )
+{
+    if (!ui->btEditMode->isChecked()) return;
+    if ((event->key()>=Qt::Key_Escape)&&(event->key()<=Qt::Key_ScrollLock)  ) return;
+    if (event->key()==-1) return;
+    QKeySequence keyS(event->key() | event->modifiers());
+    ui->edHotkey->setText(keyS.toString());
+}
+QKeySequence HotKeyEdit::getKeySequence()
+{
+    return QKeySequence(ui->edHotkey->text());
+}
 
-public:
-    explicit Project(QString name, qint64 total=0, int iHoursPerDay=24, QString iKeySequence="", QWidget *parent = 0);
-    ~Project();
-    QString getName();
-    void stop();
-    qint64 getTotal();
-    int getHoursPerDay();
-    QString getKeySequence();
-    static int defaultHoursPerDay;
-    QAction* getAction();
-
-private:
-    Ui::Project *ui;
-    qint32 total;
-    bool isSender;
-    QTimer timer;
-    int hoursePerDay;
-    QTime current;
-    QAction *acRun;
-signals:
-    void running();
-    void setIconToolTip(const QString text,const QString name);
-public slots:
-    void onRunningSend();
-
-private slots:
-    void updateTimeLabel(bool wCurrent = true);
-    void on_btRun_toggled(bool checked);
-    void on_btEdit_clicked();
-    void on_btDelete_clicked();
-    void onActionRun(bool checked);
-};
-
-#endif // PROJECT_H
+void HotKeyEdit::on_btEditMode_toggled(bool checked)
+{
+    if (checked) ui->edHotkey->setFocus();
+}
+void HotKeyEdit::setText(QString text)
+{
+    ui->edHotkey->setText(text);
+}

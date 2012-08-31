@@ -5,6 +5,7 @@
 moc_*.cpp
 *.*~
 qrc_*.cpp
+*.qm
 Makefile
 protimer.pro.user
 src/protimer.pro.user.*
@@ -19,3 +20,4 @@ packages/protimer/DEBIAN/md5sums
 packages/protimer/DEBIAN/control
 packages/protimer/usr/bin/basetest
 screen/*
+packages/protimer/usr/share/doc/protimer/changelog.gz
