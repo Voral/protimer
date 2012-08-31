@@ -20,11 +20,21 @@
 /*                                                                              */
 /********************************************************************************/
 #include <QApplication>
+#include <QTranslator>
+#include <QLocale>
+
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTranslator appTranslator;
+    appTranslator.load("protimer_" + QLocale::system().name(),qApp->applicationDirPath()+"/lang/");
+    qApp->installTranslator(&appTranslator);
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),qApp->applicationDirPath()+"/lang/");
+    qApp->installTranslator(&qtTranslator);
+
     MainWindow w;
     w.show();
 

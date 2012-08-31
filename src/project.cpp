@@ -26,7 +26,7 @@
 
 int Project::defaultHoursPerDay = 8;
 
-Project::Project(QString name, qint64 total, int iHoursPerDay, QWidget *parent) :
+Project::Project(QString name, qint64 total, int iHoursPerDay, QString iKeySequence, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Project),
     total(total),
@@ -34,10 +34,15 @@ Project::Project(QString name, qint64 total, int iHoursPerDay, QWidget *parent) 
     hoursePerDay(iHoursPerDay),
     current(QTime(0,0,0,0))
 {
+    acRun = new QAction(name,this);
+    connect(acRun,SIGNAL(triggered(bool)),this,SLOT(onActionRun(bool)));
+    acRun->setCheckable(true);
     ui->setupUi(this);
     updateTimeLabel();
     connect(&timer,SIGNAL(timeout()),this,SLOT(updateTimeLabel()));
     ui->lbName->setText(name);
+    ui->lbShortcut->setText(iKeySequence);
+    if (!iKeySequence.isEmpty()) ui->btRun->setShortcut(QKeySequence(iKeySequence));
     updateTimeLabel(false);
 }
 Project::~Project()
@@ -60,6 +65,8 @@ void Project::updateTimeLabel(bool wCurrent)
                 .arg(sec,2,10,QChar('0'))
                 .arg(fulldays)
                 .arg(this->hoursePerDay));
+
+    emit setIconToolTip(ui->lbTime->text(),ui->lbName->text());
 }
 void Project::stop()
 {
@@ -70,6 +77,10 @@ qint64 Project::getTotal()
 {
     return total;
 }
+QAction* Project::getAction()
+{
+    return acRun;
+}
 
 void Project::onRunningSend()
 {
@@ -79,9 +90,17 @@ void Project::onRunningSend()
         stop();
     }
 }
+void Project::onActionRun(bool checked)
+{
+    ui->btRun->setChecked(checked);
+}
 
 void Project::on_btRun_toggled(bool checked)
 {
+    disconnect(acRun,SIGNAL(triggered(bool)),this,SLOT(onActionRun(bool)));
+    acRun->setChecked(checked);
+    connect(acRun,SIGNAL(triggered(bool)),this,SLOT(onActionRun(bool)));
+    QFont ft = acRun->font();
     if (checked)
     {
         current.start();
@@ -89,13 +108,16 @@ void Project::on_btRun_toggled(bool checked)
         isSender = true;
         emit running();
         ui->btRun->setIcon(QIcon(":/res/coelho/player_pause.png"));
+        ft.setBold(true);
     }
     else {
         ui->btRun->setIcon(QIcon(":/res/coelho/player_play.png"));
         total = total + current.elapsed();
         timer.stop();
         updateTimeLabel(false);
+        ft.setBold(false);
     }
+    acRun->setFont(ft);
 }
 QString Project::getName()
 {
@@ -108,14 +130,20 @@ int Project::getHoursPerDay()
 
 void Project::on_btEdit_clicked()
 {
-    Edit *dlgEdit = new Edit(ui->lbName->text(),this->hoursePerDay,this);
+    Edit *dlgEdit = new Edit(ui->lbName->text(),this->hoursePerDay,ui->lbShortcut->text(), this);
     if (dlgEdit->exec()==QDialog::Accepted)
     {
         this->hoursePerDay = dlgEdit->getHours();
         ui->lbName->setText(dlgEdit->getName());
+        ui->btRun->setShortcut(dlgEdit->getKeySequence());
+        ui->lbShortcut->setText(dlgEdit->getKeySequence().toString());
         updateTimeLabel(false);
     }
     delete dlgEdit;
+}
+QString Project::getKeySequence()
+{
+    return ui->lbShortcut->text();
 }
 
 void Project::on_btDelete_clicked()

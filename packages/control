@@ -1,6 +1,6 @@
 Package: protimer
 Maintainer: Alexander Vorobyev <mvoral@mail.ru>
-Section: Office
+Section: devel
 Priority: optional
 Description: Projects Timer. Таймер Проектов.
  The small time trasking program.

@@ -19,52 +19,31 @@
 /*    along with protime.  If not, see <http://www.gnu.org/licenses/>.          */
 /*                                                                              */
 /********************************************************************************/
-#ifndef PROJECT_H
-#define PROJECT_H
+#ifndef HOTKEYEDIT_H
+#define HOTKEYEDIT_H
 
 #include <QWidget>
-#include <QTimer>
-#include <QTime>
 
 namespace Ui {
-class Project;
+class HotKeyEdit;
 }
 
-class Project : public QWidget
+class HotKeyEdit : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Project(QString name, qint64 total=0, int iHoursPerDay=24, QString iKeySequence="", QWidget *parent = 0);
-    ~Project();
-    QString getName();
-    void stop();
-    qint64 getTotal();
-    int getHoursPerDay();
-    QString getKeySequence();
-    static int defaultHoursPerDay;
-    QAction* getAction();
+    explicit HotKeyEdit(QWidget *parent = 0);
+    ~HotKeyEdit();
+    QKeySequence getKeySequence();
+    void setText(QString text);
+protected:
+    void keyPressEvent ( QKeyEvent * event );
+private slots:
+    void on_btEditMode_toggled(bool checked);
 
 private:
-    Ui::Project *ui;
-    qint32 total;
-    bool isSender;
-    QTimer timer;
-    int hoursePerDay;
-    QTime current;
-    QAction *acRun;
-signals:
-    void running();
-    void setIconToolTip(const QString text,const QString name);
-public slots:
-    void onRunningSend();
-
-private slots:
-    void updateTimeLabel(bool wCurrent = true);
-    void on_btRun_toggled(bool checked);
-    void on_btEdit_clicked();
-    void on_btDelete_clicked();
-    void onActionRun(bool checked);
+    Ui::HotKeyEdit *ui;
 };
 
-#endif // PROJECT_H
+#endif // HOTKEYEDIT_H

@@ -1,0 +1,24 @@
+protimer (1.2-1) stable; urgency=low
+
+
+  * Hotkey parameter was added
+  * Tray Icon and menu was added
+  * Russian interface was added
+ 
+ -- Alexander Vorobyev <mvoral@mail.ru>  Wed, 31 Aug 2012 14:45:00 +0300
+
+protimer (1.1-1) stable; urgency=low
+
+
+  * Project settings form was added
+  * Param."Hours per day" was added
+  * Confirmation of project deleting was added
+ 
+ -- Alexander Vorobyev <mvoral@mail.ru>  Wed, 22 Aug 2012 15:00:00 +0300
+
+protimer (1.0-1) testing; urgency=low
+
+
+  * first release
+ 
+ -- Alexander Vorobyev <mvoral@mail.ru>  Wed, 01 Aug 2012 18:00:00 +0300
