@@ -21,3 +21,4 @@ packages/protimer/DEBIAN/control
 packages/protimer/usr/bin/basetest
 screen/*
 packages/protimer/usr/share/doc/protimer/changelog.gz
+binwin/*

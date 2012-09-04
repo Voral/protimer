@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qApp->setWindowIcon((QPixmap(":/res/coelho/player_time.ico")));
 #endif
     ui->setupUi(this);
-    qApp->setApplicationVersion("1.2");
+    qApp->setApplicationVersion("1.3");
     qApp->setApplicationName(tr("Projects Timer"));
     setWindowTitle(qApp->applicationName());
 

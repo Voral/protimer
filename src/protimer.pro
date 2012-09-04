@@ -41,6 +41,9 @@ DESTDIR = ../bin
         }
 }
 
+win32 {
+        RC_FILE = icon.rc
+}
 
 OBJECTS_DIR += ../.objsrv
 MOC_DIR += ../.mocsrv
@@ -71,3 +74,6 @@ QMAKE_CPPFLAGS *=$(shell dpkg-buildflags --get CPPFLAGS)
 QMAKE_CFLAGS *= $(shell dpkg-buildflags --get CFLAGS)
 QMAKE_CXXFLAGS *=$(shell dpkg-buildflags --get CXXFLAGS)
 QMAKE_LDFLAGS *=$(shell dpkg-buildflags --get LDFLAGS)
+
+OTHER_FILES += \
+    icon.rc
