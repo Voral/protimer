@@ -1,3 +1,19 @@
+protimer (1.4-1) stable; urgency=low
+
+
+  * Autostart parameter was added
+  * Command line key for start project was added
+
+ 
+ -- Alexander Vorobyev <mvoral@mail.ru>  Fri, 26 Oct 2012 23:34:15 +0300
+
+protimer (1.3-1) stable; urgency=low
+
+
+  * Windows: Bug with applications icon was fixedHotkey parameter was added
+ 
+ -- Alexander Vorobyev <mvoral@mail.ru>  Wed, 31 Aug 2012 14:45:00 +0300
+
 protimer (1.2-1) stable; urgency=low
 
 

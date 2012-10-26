@@ -1,2 +1,3 @@
-Update: 1.3 released
-* Windows: Bug with applications icon was fixedHotkey parameter was added
+Update: 1.4 released
++ Autostart parameter was added
++ Command line key for start project was added

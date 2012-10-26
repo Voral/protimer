@@ -42,7 +42,7 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *trayIcon;
     bool validateName(QString name);
-    Project *addProject(QString name, qint64 total=0, int hoursePerDay=24, QString keySequence="");
+    Project *addProject(int id, QString name, qint64 total=0, int hoursePerDay=24, QString keySequence="", bool autostart = false);
     void createTrayIcon();
     QAction *quitAction;
     QMenu *trayIconMenu;

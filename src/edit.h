@@ -33,11 +33,12 @@ class Edit : public QDialog
     Q_OBJECT
 
 public:
-    explicit Edit(QString pName, int pHours, QString pKeySequence="", QWidget *parent = 0);
+    explicit Edit(int id, QString pName, int pHours, QString pKeySequence="", bool autostart=false, QWidget *parent = 0);
     ~Edit();
     QString getName();
     int getHours();
     QKeySequence getKeySequence();
+    bool getAutostart();
 private:
     Ui::Edit *ui;
 };

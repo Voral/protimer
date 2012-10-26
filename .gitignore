@@ -4,6 +4,7 @@
 *.tgz
 moc_*.cpp
 *.*~
+*~
 qrc_*.cpp
 *.qm
 Makefile
@@ -22,3 +23,5 @@ packages/protimer/usr/bin/basetest
 screen/*
 packages/protimer/usr/share/doc/protimer/changelog.gz
 binwin/*
+binmac/*
+distr/*

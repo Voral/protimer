@@ -35,7 +35,7 @@ class Project : public QWidget
     Q_OBJECT
 
 public:
-    explicit Project(QString name, qint64 total=0, int iHoursPerDay=24, QString iKeySequence="", QWidget *parent = 0);
+    explicit Project(int id, QString name, qint64 total=0, int iHoursPerDay=24, QString iKeySequence="",bool autostart = false, QWidget *parent = 0);
     ~Project();
     QString getName();
     void stop();
@@ -43,7 +43,12 @@ public:
     int getHoursPerDay();
     QString getKeySequence();
     static int defaultHoursPerDay;
+
     QAction* getAction();
+    int getId();
+    bool getAutostart();
+    static int getNewId();
+    static void runAuto();
 
 private:
     Ui::Project *ui;
@@ -53,18 +58,23 @@ private:
     int hoursePerDay;
     QTime current;
     QAction *acRun;
+    static int lastId;
+    static Project* autostartProject;
+    void setAutoStart(bool state);
+
 signals:
     void running();
     void setIconToolTip(const QString text,const QString name);
 public slots:
     void onRunningSend();
+    void onActionRun(bool checked);
 
 private slots:
     void updateTimeLabel(bool wCurrent = true);
     void on_btRun_toggled(bool checked);
     void on_btEdit_clicked();
     void on_btDelete_clicked();
-    void onActionRun(bool checked);
+
 };
 
 #endif // PROJECT_H

@@ -1,6 +1,6 @@
 #!/bin/sh
 #gzip -9
-VERSION="1.2"
+VERSION="1.4"
 VERSIONPKG="1"
 PLATFORM="i386"
 ARCH=32
@@ -31,4 +31,7 @@ lintian $DEBNAME
 alien --to-rpm --scripts ./$DEBNAME
 alien --to-tgz --scripts ./$DEBNAME
                                                                              
-mv $PKGNAME-$VERSION.tgz $PKGNAME-$VERSION-$PLATFORM-$VERSIONPKG.tgz
+mv $PKGNAME-$VERSION.tgz ../distr/$PKGNAME-$VERSION-$PLATFORM-$VERSIONPKG.tgz
+mv $DEBNAME ../distr/$DEBNAME
+mv *386.rpm ../distr/
+

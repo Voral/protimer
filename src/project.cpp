@@ -25,8 +25,10 @@
 #include <QMessageBox>
 
 int Project::defaultHoursPerDay = 8;
+int Project::lastId = -1;
+Project* Project::autostartProject = NULL;
 
-Project::Project(QString name, qint64 total, int iHoursPerDay, QString iKeySequence, QWidget *parent) :
+Project::Project(int id, QString name, qint64 total, int iHoursPerDay, QString iKeySequence, bool autostart, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Project),
     total(total),
@@ -42,6 +44,9 @@ Project::Project(QString name, qint64 total, int iHoursPerDay, QString iKeySeque
     connect(&timer,SIGNAL(timeout()),this,SLOT(updateTimeLabel()));
     ui->lbName->setText(name);
     ui->lbShortcut->setText(iKeySequence);
+    ui->lbNum->setText(QString("#%1").arg(id));
+    if (id > Project::lastId) Project::lastId = id;
+    setAutoStart(autostart);
     if (!iKeySequence.isEmpty()) ui->btRun->setShortcut(QKeySequence(iKeySequence));
     updateTimeLabel(false);
 }
@@ -59,7 +64,7 @@ void Project::updateTimeLabel(bool wCurrent)
     qint16 sec = tmp -  hours*3600 - min * 60;
     qint16 fulldays =  hours / this->hoursePerDay;
 
-    ui->lbTime->setText(QString("%1:%2:%3 (%4 full days [%5 hour/day])")
+    ui->lbTime->setText(tr("%1:%2:%3 (%4 full days [%5 hour/day])")
                 .arg(hours)
                 .arg(min,2,10,QChar('0'))
                 .arg(sec,2,10,QChar('0'))
@@ -130,13 +135,18 @@ int Project::getHoursPerDay()
 
 void Project::on_btEdit_clicked()
 {
-    Edit *dlgEdit = new Edit(ui->lbName->text(),this->hoursePerDay,ui->lbShortcut->text(), this);
+    bool autostart = getAutostart();
+    Edit *dlgEdit = new Edit(getId(),ui->lbName->text(),this->hoursePerDay,ui->lbShortcut->text(), autostart, this);
     if (dlgEdit->exec()==QDialog::Accepted)
     {
         this->hoursePerDay = dlgEdit->getHours();
         ui->lbName->setText(dlgEdit->getName());
         ui->btRun->setShortcut(dlgEdit->getKeySequence());
         ui->lbShortcut->setText(dlgEdit->getKeySequence().toString());
+        if (autostart != dlgEdit->getAutostart())
+        {
+            setAutoStart(dlgEdit->getAutostart());
+        }
         updateTimeLabel(false);
     }
     delete dlgEdit;
@@ -156,4 +166,42 @@ void Project::on_btDelete_clicked()
     {
         this->deleteLater();
     }
+}
+int Project::getId()
+{
+    QString result = ui->lbNum->text();
+    return result.replace("#","").toInt();
+}
+
+bool Project::getAutostart()
+{
+    return (!ui->lbAutostart->text().isEmpty());
+}
+int Project::getNewId()
+{
+    return ++lastId;
+}
+void Project::setAutoStart(bool state)
+{
+    if (state)
+    {
+        if ((Project::autostartProject != this)&&(Project::autostartProject != NULL))
+        {
+            Project::autostartProject->setAutoStart(false);
+        }
+        Project::autostartProject = this;
+        ui->lbAutostart->setText(tr("Autostart"));
+    }
+    else
+    {
+        if (Project::autostartProject == this)
+        {
+            Project::autostartProject = NULL;
+        }
+        ui->lbAutostart->setText("");
+    }
+}
+void Project::runAuto()
+{
+    if (Project::autostartProject != NULL) Project::autostartProject->onActionRun(true);
 }

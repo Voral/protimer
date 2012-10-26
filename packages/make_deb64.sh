@@ -1,6 +1,6 @@
 #!/bin/sh
 #gzip -9
-VERSION="1.2"
+VERSION="1.4"
 VERSIONPKG="1"
 PLATFORM="amd64"
 ARCH=64
@@ -30,4 +30,6 @@ lintian $DEBNAME
 alien --to-rpm --scripts ./$DEBNAME
 alien --to-tgz --scripts ./$DEBNAME
 gzip -c -9 install/* >> $PKGNAME-$VERSION.tgz
-mv $PKGNAME-$VERSION.tgz $PKGNAME-$VERSION-$PLATFORM-$VERSIONPKG.tgz
+mv $PKGNAME-$VERSION.tgz ../distr/$PKGNAME-$VERSION-$PLATFORM-$VERSIONPKG.tgz
+mv $DEBNAME ../distr/$DEBNAME
+mv *64.rpm ../distr/

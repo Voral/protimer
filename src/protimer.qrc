@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+	<file>res/coelho/protimer.png</file>
         <file>res/coelho/player_time.ico</file>
         <file>res/coelho/cancel.png</file>
         <file>res/coelho/edit_add.png</file>

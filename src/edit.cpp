@@ -23,14 +23,20 @@
 #include "ui_edit.h"
 #include "hotkeyedit.h"
 
-Edit::Edit(QString pName, int pHours, QString pKeySequence, QWidget *parent) :
+Edit::Edit(int id, QString pName, int pHours, QString pKeySequence, bool autostart, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Edit)
 {
     ui->setupUi(this);
     ui->edHour->setValue(pHours);
     ui->edName->setText(pName);
+    ui->chAutostart->setChecked(autostart);
+    if (id>-1) setWindowTitle(QString("%1 #%2").arg(windowTitle()).arg(id));
     if (!pKeySequence.isEmpty()) ui->edHotKey->setText(pKeySequence);
+    ui->lbHours->adjustSize();
+    adjustSize();
+    setFixedWidth(width());
+    setFixedHeight(height());
 }
 
 Edit::~Edit()
@@ -52,3 +58,7 @@ QKeySequence Edit::getKeySequence()
     return ui->edHotKey->getKeySequence();
 }
 
+bool Edit::getAutostart()
+{
+    return ui->chAutostart->isChecked();
+}

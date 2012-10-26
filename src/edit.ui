@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
+    <width>355</width>
     <height>130</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
@@ -19,48 +25,14 @@
   <property name="maximumSize">
    <size>
     <width>99999</width>
-    <height>130</height>
+    <height>300</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Hot key</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lbName">
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLineEdit" name="edName"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lbHours">
-     <property name="text">
-      <string>Hours per Day</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+   <item row="1" column="1">
     <widget class="QSpinBox" name="edHour">
      <property name="minimum">
       <number>1</number>
@@ -73,8 +45,63 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="2">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="edName">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbName">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbHours">
+     <property name="text">
+      <string>Hours per Day</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lbHotkey">
+     <property name="text">
+      <string>Hot key</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <widget class="HotKeyEdit" name="edHotKey"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lbAutostart">
+     <property name="text">
+      <string>Autostart</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="chAutostart">
+     <property name="text">
+      <string notr="true"/>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

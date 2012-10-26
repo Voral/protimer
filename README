@@ -6,6 +6,10 @@ protimer is small time tracking application
 
 * Time tracking by projects
 
+~ Comand line key
+
+-d<project_id>  - activate project whis number <project_id> on start application
+
 ~ Need
 
 * Qt 4.1+
